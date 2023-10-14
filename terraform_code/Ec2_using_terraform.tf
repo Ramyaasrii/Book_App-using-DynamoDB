@@ -43,26 +43,6 @@ resource "local_file" "private_key" {
   filename = "bookappkey.pem"  # Fixed key pair name
 }
 
-# Create an Amazon DynamoDB table
-resource "aws_dynamodb_table" "book_db" {
-  name           = "BookDb"
-  billing_mode   = "PROVISIONED" # or "PAY_PER_REQUEST" for on-demand
-  read_capacity  = 5              # Change to your desired values
-  write_capacity = 5              # Change to your desired values
-
-  hash_key = "BookID"
-  attribute {
-    name = "BookID"
-    type = "S" # String data type, change as needed
-  }
-
-  tags = {
-    Name = "BookDbTable"
-  }
-}
-
-
-
 # Create a security group for EC2 instance
 resource "aws_security_group" "sg_ec2" {
   name        = "sg_ec2"
@@ -124,6 +104,24 @@ resource "aws_security_group" "sg_ec2" {
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# Create an Amazon DynamoDB table
+resource "aws_dynamodb_table" "book_db" {
+  name           = "BookDb"
+  billing_mode   = "PROVISIONED" # or "PAY_PER_REQUEST" for on-demand
+  read_capacity  = 5              # Change to your desired values
+  write_capacity = 5              # Change to your desired values
+
+  hash_key = "BookID"
+  attribute {
+    name = "BookID"
+    type = "S" # String data type, change as needed
+  }
+
+  tags = {
+    Name = "BookDbTable"
   }
 }
 
