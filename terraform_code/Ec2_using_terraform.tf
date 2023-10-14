@@ -44,8 +44,11 @@ resource "local_file" "private_key" {
 }
 
 # Create an Amazon DynamoDB table
-resource "aws_dynamodb_table" "BookDb" {
+resource "aws_dynamodb_table" "book_db" {
   name           = "BookDb"
+  billing_mode   = "PROVISIONED" # or "PAY_PER_REQUEST" for on-demand
+  read_capacity  = 5              # Change to your desired values
+  write_capacity = 5              # Change to your desired values
 
   hash_key = "BookID"
   attribute {
@@ -57,6 +60,7 @@ resource "aws_dynamodb_table" "BookDb" {
     Name = "BookDbTable"
   }
 }
+
 
 
 # Create a security group for EC2 instance
